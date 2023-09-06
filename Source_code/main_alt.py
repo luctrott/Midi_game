@@ -114,12 +114,15 @@ class Main:
         self.game=Game()
         self.game.lcd.set_backlight(True)
         print("game done")
+        self.main=main(self.game)
+        print("main done")
         self.thread=Thread(target=self.run_logic)
         self.thread.start()
         print("init done")
         self.game.run()
     def run_logic(self):
-        #TODO
+        self.main.init()
+        print(self.game.buttons[3].when_held)
         while self.game.running:
             time.sleep(1)
 
