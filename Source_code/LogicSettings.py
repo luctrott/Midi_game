@@ -1,4 +1,4 @@
-class Logic_Settings:
+class LogicSettings:
     #LCD
     cols = 20
     rows = 4
