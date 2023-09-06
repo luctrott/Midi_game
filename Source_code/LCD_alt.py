@@ -51,19 +51,15 @@ class LCD:
         for x in self.chars:
             for y in x:
                 y.draw()
-
-    @property
-    def backlight_enable(self)->bool:
-        return self.__backlight
-
-    @backlight_enable.setter    
+    
     def set_backlight(self,on:bool):
         for x in self.chars:
             for y in x:
                 y.set_backlight(on)
         self.__backlight=on
     
-    def __print(self,text:str):
+    def print(self,text:str):
+
         for i in text:
             self.write_bitmap(self.charmap.get_charmap_from_char(i),self.cursor_pos[0],self.cursor_pos[1])
             self.cursor_pos[0]+=1
@@ -77,7 +73,4 @@ class LCD:
         self.charmap.create_custom_char(num,bitmap) 
 
     def write_string(self,st):
-        self.__print(st)
-    
-    def close(self):
-        print("LCD closed")
+        self.print(st)

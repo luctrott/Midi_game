@@ -3,8 +3,8 @@ import time
 from LCDCharmap import LCDCharmap
 from Settings import Settings
 from Char import Char
-from LCD import LCD
-from flügel import main
+from LCD_alt import LCD
+from flügel_alt import main
 from threading import Thread
 import os
 from Button import Button
