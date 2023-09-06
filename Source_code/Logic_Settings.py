@@ -9,3 +9,8 @@ class Logic_Settings:
 
     #MIDI
     midi_port = 'Microsoft GS Wavetable Synth 0'
+
+    #Directories
+    dev_dir = './dev/'
+    usb_dir = './usb/'
+    onboard_dir = './onboard/'
