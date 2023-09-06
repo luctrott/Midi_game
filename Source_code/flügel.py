@@ -1,8 +1,8 @@
-from main import Game
+#from main import Game
 from LCDHandler import LCDHandler
 from CustomChars import CustomChars
 class main:
-    def __init__(self,game:Game) -> None:
+    def __init__(self,game) -> None:
         self._game=game
         self.__lcd=LCDHandler(game)
         self.__lcd.create_char(0,CustomChars.char0)
@@ -13,3 +13,8 @@ class main:
         self.__lcd.create_char(5,CustomChars.char5)
         self.__lcd.create_char(6,CustomChars.char6)
         self.__progress_bar_chars=['\x01','\x02','\x03','\x04']
+        self.__lcd.write_string(''.join(self.__progress_bar_chars))
+
+    def close(self):
+        self.__lcd.close()
+        

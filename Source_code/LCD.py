@@ -57,7 +57,7 @@ class LCD:
         return self.__backlight
 
     @backlight_enable.setter    
-    def set_backlight(self,on:bool):
+    def backlight_enable(self,on:bool):
         for x in self.chars:
             for y in x:
                 y.set_backlight(on)

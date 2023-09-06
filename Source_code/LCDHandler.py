@@ -1,9 +1,8 @@
-from main import Game
 import threading
 import functools
 
 class LCDHandler:
-    def __init__(self,game:Game)->None:
+    def __init__(self,game)->None:
         self.__lcd=game.lcd
         self.__thread=threading.Thread(target=self.__run,daemon=True)
         self.__closed=False
@@ -12,11 +11,13 @@ class LCDHandler:
         self.__tasks=[]
         self.__lcd.init()
         self.__backlight=self.__lcd.backlight_enable
+        self.__thread.start()
     
     def __run(self) ->None:
         while not self.__closed:
             self.__work.wait()
             for t in self.__tasks:
+                
                 if callable(t):
                     t()
                 else:

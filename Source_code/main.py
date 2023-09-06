@@ -2,7 +2,6 @@ import pygame
 import time
 from LCDCharmap import LCDCharmap
 from Pygame_Settings import Pygame_Settings as Settings
-from Char import Char
 from LCD import LCD
 from flügel import main
 from threading import Thread
@@ -92,6 +91,7 @@ class Game:
             self.update()
             self.draw()
         pygame.quit()
+        
     def events(self):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -112,8 +112,10 @@ class Game:
 class Main:
     def __init__(self) -> None:
         self.game=Game()
-        self.game.lcd.set_backlight(True)
+        self.game.lcd.backlight_enable=True
         print("game done")
+        self.main=main(game=self.game)
+        a=self.main._game
         self.thread=Thread(target=self.run_logic)
         self.thread.start()
         print("init done")
@@ -122,6 +124,7 @@ class Main:
         #TODO
         while self.game.running:
             time.sleep(1)
+        self.main.close()
 
 if __name__ == "__main__":    
     a=Main()
