@@ -1,7 +1,7 @@
 import pygame
 import time
 from LCDCharmap import LCDCharmap
-from Pygame_Settings import Settings
+from Pygame_Settings import Pygame_Settings as Settings
 from Char import Char
 from LCD import LCD
 from flügel import main

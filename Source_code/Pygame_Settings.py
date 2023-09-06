@@ -1,4 +1,4 @@
-class Settings:
+class Pygame_Settings:
     br_color_off=(0,100,0)
     br_color_on=(0,230,0)
     pix_color_off_on=(0,10,0)
