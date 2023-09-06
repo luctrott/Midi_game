@@ -44,8 +44,8 @@ class LCDHandler:
         self.__tasks.append(self.__lcd.clear)
         self.__work.set()
     
-    def create_char(self,bitmap:list,x:int,y:int)->None:
-        self.__tasks.append(functools.partial(self.__lcd.create_char,bitmap,x,y))
+    def create_char(self,num:int,bitmap:tuple)->None:
+        self.__tasks.append(functools.partial(self.__lcd.create_char,num,bitmap))
         self.__work.set()
     
     def __set_cursor_pos(self,x:int,y:int)->None:
