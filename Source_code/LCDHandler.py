@@ -2,7 +2,7 @@ from main import Game
 import threading
 import functools
 
-class Lcd_handler:
+class LCDHandler:
     def __init__(self,game:Game)->None:
         self.__lcd=game.lcd
         self.__thread=threading.Thread(target=self.__run,daemon=True)
