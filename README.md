@@ -3,14 +3,12 @@
 Midi_Player/ LCD sim
 
 Installation
-python3.9
-pip3.9 install mido
-pip3.9 install python-rtmidi
-pip3.9 install pygame-ce
-https://www.microsoft.com/en-us/download/details.aspx?id=48145
+python3
+pip3 install -r requirements.txt
 
 Midifiles: Terry Smythe
 
 Charmap: https://github.com/visrealm/vrEmuLcd.git
 
 # Create the folders dev and usb in Sourcecode directory
+# This repo is currently under reconstruction Please refere to v1.0.0 for the working version
