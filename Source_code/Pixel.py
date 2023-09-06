@@ -1,5 +1,5 @@
 import pygame
-from Settings import Settings
+from Pygame_Settings import Settings
 class Pixel:
     def __init__(self,screen) -> None:
         self.screen=screen
