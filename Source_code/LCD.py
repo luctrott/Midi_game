@@ -12,10 +12,10 @@ class LCD:
         self.__backlight=False    
         self.cursor_pos:list=[0,0]
     
-    def init(self):
+    def init(self)->None:
         print("LCD init")
     
-    def create_lcd(self):
+    def create_lcd(self)->None:
         self.chars=[]
         for x in range(Settings.lcd_chars[0]):
             tmp=[]
@@ -31,18 +31,18 @@ class LCD:
                 tmp.append(char)
             self.chars.append(tmp)
     
-    def write_bitmap(self,bitmap:list,x:int,y:int):
+    def write_bitmap(self,bitmap:list,x:int,y:int)->None:
         try:
             self.chars[x][y].write_bitmap(bitmap)
         except IndexError:
             print(f"IndexError: {x},{y}: {len(self.chars)}")
     
-    def clear(self):
+    def clear(self) -> None:
         for x in self.chars:
             for y in x:
                 y.clear()
     
-    def draw(self):
+    def draw(self)->None:
         if self.__backlight:
             pygame.draw.rect(self.screen,Settings.br_color_on,self.lcd_rect)
         else:
@@ -57,13 +57,13 @@ class LCD:
         return self.__backlight
 
     @backlight_enable.setter    
-    def backlight_enable(self,on:bool):
+    def backlight_enable(self,on:bool)->None:
         for x in self.chars:
             for y in x:
                 y.set_backlight(on)
         self.__backlight=on
     
-    def __print(self,text:str):
+    def __print(self,text:str)->None:
         for i in text:
             self.write_bitmap(self.charmap.get_charmap_from_char(i),self.cursor_pos[0],self.cursor_pos[1])
             self.cursor_pos[0]+=1
@@ -73,10 +73,10 @@ class LCD:
             if self.cursor_pos[1]>=Settings.lcd_chars[1]:
                 self.cursor_pos[1]=0
                 
-    def create_char(self,num:int,bitmap:tuple):
+    def create_char(self,num:int,bitmap:tuple)->None:
         self.charmap.create_custom_char(num,bitmap) 
 
-    def write_string(self,st):
+    def write_string(self,st)->None:
         self.__print(st)
     
     def close(self):

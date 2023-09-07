@@ -12,11 +12,11 @@ class MyHandler(FileSystemEventHandler):
             self.to_call_when_added=None
             self.to_call_when_removed=None
 
-        def on_created(self, event):
+        def on_created(self, event)->None:
             if callable(self.to_call_when_added):
                 self.to_call_when_added()
         
-        def on_deleted(self, event):
+        def on_deleted(self, event)->None:
             if callable(self.to_call_when_removed):
                 self.to_call_when_removed()
 
@@ -33,7 +33,7 @@ class UsbManager:
         self.when_removed=None
         self._on_dev_added()
     
-    def _on_dev_added(self):
+    def _on_dev_added(self)->None:
         
         a=False
         for dev in os.listdir(LogicSettings.dev_dir):
@@ -47,7 +47,7 @@ class UsbManager:
             if callable(self.when_added):
                 self.when_added()
 
-    def _on_dev_removed(self):
+    def _on_dev_removed(self)->None:
         tmp= os.listdir(LogicSettings.dev_dir)
         a=False
         for dev in self.__devs:
@@ -59,14 +59,14 @@ class UsbManager:
             if callable(self.when_removed):
                 self.when_removed()
     
-    def __mount(self,dev):
+    def __mount(self,dev)->None:
         print("Mounting "+dev)
         if not os.path.exists(LogicSettings.usb_dir+dev):
             os.mkdir(LogicSettings.usb_dir+dev)
         else:
             print("Error: "+LogicSettings.usb_dir+dev+" already exists")
     
-    def __unmount(self,dev):
+    def __unmount(self,dev)->None:
         print("Unmounting "+dev)
         if os.path.exists(LogicSettings.usb_dir+dev):
             shutil.rmtree(LogicSettings.usb_dir+dev)
@@ -75,10 +75,10 @@ class UsbManager:
         
 
     @property
-    def dev_count(self):
+    def dev_count(self)->int:
         return len(self.__devs)    
 
-    def close(self):
+    def close(self)->None:
         self.__observer_dev.stop()
         self.__observer_dev.join()
         for dev in self.__devs:

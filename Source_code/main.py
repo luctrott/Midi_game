@@ -67,13 +67,13 @@ class Game:
         self.clock=pygame.time.Clock()
         self.fps=60
       
-    def eject(self):
+    def eject(self)->None:
         shutil.rmtree(LogicSettings.dev_dir)
         os.mkdir(LogicSettings.dev_dir)
         
         
 
-    def open_f(self):
+    def open_f(self)->None:
         root=tk.Tk()
         root.withdraw()
         #Create a pygame event for mouse button up
@@ -85,7 +85,7 @@ class Game:
 
         
     
-    def run(self):
+    def run(self)->None:
         while self.running:
             self.clock.tick(self.fps)
             self.events()
@@ -93,23 +93,25 @@ class Game:
             self.draw()
         pygame.quit()
         
-    def events(self):
+    def events(self)->None:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 self.running=False
                 os._exit(0)
             for i in self.buttons:
                 i.check_for_press_or_release(event)
-    def update(self):
+
+    def update(self)->None:
         for i in self.buttons:
             i.update()
         
-    def draw(self):
+    def draw(self)->None:
         self.surface.fill((0,0,255))
         for i in self.buttons:
             i.draw()
         self.lcd.draw()
         pygame.display.flip()
+
 class Main:
     def __init__(self) -> None:
         self.game=Game()
@@ -121,7 +123,8 @@ class Main:
         self.thread.start()
         print("init done")
         self.game.run()
-    def run_logic(self):
+    
+    def run_logic(self)->None:
         #TODO
         while self.game.running:
             time.sleep(1)

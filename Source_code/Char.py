@@ -1,13 +1,14 @@
 import pygame
 from Pygame_Settings import Pygame_Settings as Settings
 from Pixel import Pixel
+
 class Char:
     def __init__(self,screen) -> None:
         self.screen=screen
         self.rect=pygame.rect.Rect(0,0,Settings.char_size[0],Settings.char_size[1])
         self.pixels=[]
     
-    def _create_pixels(self):
+    def _create_pixels(self) -> None:
         self.pixels=[]
         for x in range(Settings.char_res[0]):
             a=int(self.rect.topleft[0]+((self.rect.width/Settings.char_res[0])*x+(self.rect.width/(Settings.char_res[0]*2))))
@@ -21,7 +22,8 @@ class Char:
                 tmp.state=True
                 tmp.backlight=False
                 self.pixels.append(tmp)
-    def write_bitmap(self,bitmap:list):
+    
+    def write_bitmap(self,bitmap:list)->None:
                 x=0
                 #bitmap=[[True,True,True,True,True,True,True,True],[True,True,True,True,True,True,True,True],[True,True,True,True,True,True,True,True],[True,True,True,True,True,True,True,True],[True,True,True,True,True,True,True,True]]
                
@@ -29,13 +31,14 @@ class Char:
                     for b in a:
                         self.pixels[x].state=b
                         x+=1
-    def clear(self):
+    def clear(self)->None:
         for i in self.pixels:
             i.state=False
 
-    def draw(self):
+    def draw(self)->None:
         for i in self.pixels:
             i.draw()
-    def set_backlight(self,on:bool):
+    
+    def set_backlight(self,on:bool)->None:
         for i in self.pixels:
             i.backlight=on

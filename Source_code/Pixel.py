@@ -7,7 +7,8 @@ class Pixel:
         self.state=False
         self.center=(0,0)
         self._rect=pygame.rect.Rect(0,0,Settings.pix_size[0],Settings.pix_size[1])
-    def draw(self):
+    
+    def draw(self)->None:
         if self.backlight:
             if self.state:
                 self.__pix(Settings.pix_color_on_on)
@@ -19,7 +20,7 @@ class Pixel:
             else:
                 self.__pix(Settings.pix_color_off_off)
 
-    def __pix(self,color):
+    def __pix(self,color)->None:
         self._rect.center=self.center
         #print(self._rect.center)
         pygame.draw.rect(self.screen,color,self._rect,0)

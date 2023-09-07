@@ -15,6 +15,6 @@ class main:
         self.__lcd.create_char(6,CustomChars.char6)
         self.__progress_bar_chars=['\x01','\x02','\x03','\x04']
         
-    def close(self):
+    def close(self) -> None:
         self.__lcd.close()
         
