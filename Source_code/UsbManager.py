@@ -21,7 +21,7 @@ class MyHandler(FileSystemEventHandler):
             if callable(self.to_call_when_removed):
                 self.to_call_when_removed()
 
-class FileManager:
+class UsbManager:
     def __init__(self):
         self.__event_handler_dev = MyHandler()
         self.__observer_dev = Observer()
@@ -66,6 +66,6 @@ class FileManager:
 
 
 if __name__ == "__main__":
-    file_manager=FileManager()
+    file_manager=UsbManager()
     input("Press enter to close")
     file_manager.close()
