@@ -1,9 +1,11 @@
 from LCDHandler import LCDHandler
 from CustomChars import CustomChars
+from FileManager import FileManager
 
 class main:
     def __init__(self,game) -> None:
         self._game=game
+        self.__filemanager=FileManager()
         self.__lcd=LCDHandler(game)
         self.__lcd.create_char(0,CustomChars.char0)
         self.__lcd.create_char(1,CustomChars.char1)
@@ -16,4 +18,5 @@ class main:
         
     def close(self) -> None:
         self.__lcd.close()
+        self.__filemanager.close()
         

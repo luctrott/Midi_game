@@ -31,7 +31,13 @@ class UsbManager:
         self.__devs=[]
         self.when_added=None
         self.when_removed=None
+        self.__init()
         self._on_dev_added()
+        
+    
+    def __init(self)->None:
+        for dev in os.listdir(LogicSettings.usb_dir):
+            self.__unmount(dev)
     
     def _on_dev_added(self)->None:
         
