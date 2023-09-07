@@ -2,6 +2,7 @@ import pygame
 import time
 from LCDCharmap import LCDCharmap
 from Pygame_Settings import Pygame_Settings as Settings
+from LogicSettings import LogicSettings
 from LCD import LCD
 from flügel import main
 from threading import Thread
@@ -19,7 +20,7 @@ class Game:
         self.surface=pygame.display.set_mode(Settings.window_size)
         self.surface_rect=self.surface.get_rect()
 
-        pygame.display.set_caption("Button Test")
+        pygame.display.set_caption("Midi Test")
 
         self.surface.fill((255,0,0))
         self.charmap=LCDCharmap()
@@ -67,8 +68,8 @@ class Game:
         self.fps=60
       
     def eject(self):
-        shutil.rmtree("dev")
-        os.mkdir("dev")
+        shutil.rmtree(LogicSettings.dev_dir)
+        os.mkdir(LogicSettings.dev_dir)
         
         
 
@@ -79,8 +80,8 @@ class Game:
         pygame.event.post(pygame.event.Event(pygame.MOUSEBUTTONUP,{'button':1}))
         path=filedialog.askdirectory()
         if path!="":
-            #shutil.copytree(src, dst, symlinks=False, ignore=None, copy_function=copy2, ignore_dangling_symlinks=False, dirs_exist_ok=False
-            shutil.copytree(path,f"dev/{path.split('/')[-1]}",dirs_exist_ok=True)
+            temp=f"{LogicSettings.dev_dir}sda{len(os.listdir(LogicSettings.dev_dir))+1}/"
+            shutil.copytree(path,temp,dirs_exist_ok=True)
 
         
     
