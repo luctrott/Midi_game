@@ -29,6 +29,8 @@ class UsbManager:
         self.__event_handler_dev.to_call_when_added=self.__on_dev_added
         self.__event_handler_dev.to_call_when_removed=self.__on_dev_removed
         self.__devs=[]
+        self.when_added=None
+        self.when_removed=None
     
     def __on_dev_added(self):
         
@@ -40,8 +42,10 @@ class UsbManager:
                         self.__mount(dev)
                         self.__devs.append(dev)
                         a=True
+        if a:
+            if callable(self.when_added):
+                self.when_added()
 
-    
     def __on_dev_removed(self):
         tmp= os.listdir(LogicSettings.dev_dir)
         a=False
@@ -50,15 +54,30 @@ class UsbManager:
                 self.__unmount(dev)
                 self.__devs.remove(dev)
                 a=True
+        if a:
+            if callable(self.when_removed):
+                self.when_removed()
     
     def __mount(self,dev):
         print("Mounting "+dev)
+        if not os.path.exists(LogicSettings.usb_dir+dev):
+            os.mkdir(LogicSettings.usb_dir+dev)
+        else:
+            print("Error: "+LogicSettings.usb_dir+dev+" already exists")
         #shutil.copytree(LogicSettings.dev_dir+dev,LogicSettings.mount_dir+dev)
     
     def __unmount(self,dev):
         print("Unmounting "+dev)
+        if os.path.exists(LogicSettings.usb_dir+dev):
+            shutil.rmtree(LogicSettings.usb_dir+dev)
+        else:
+            print("Error: "+LogicSettings.usb_dir+dev+" does not exist")
         #shutil.rmtree(LogicSettings.mount_dir+dev)
-    
+
+    @property
+    def dev_count(self):
+        return len(self.__devs)    
+
     def close(self):
         self.__observer_dev.stop()
         self.__observer_dev.join()
