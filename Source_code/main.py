@@ -1,4 +1,4 @@
-from Game import Game
+from pyga.Game import Game
 from flügel import main
 from threading import Thread
 import time

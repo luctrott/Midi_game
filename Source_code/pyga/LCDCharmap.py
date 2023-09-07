@@ -1,4 +1,4 @@
-from Pygame_Settings import Pygame_Settings as Settings
+from pyga.Pygame_Settings import Pygame_Settings as Settings
 class LCDCharmap:
     def __init__(self,charset:str="A00") -> None:
         self.__custom_chars=[[False,False,False,False,False,False,False,False] for x in range(8)]

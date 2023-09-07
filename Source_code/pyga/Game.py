@@ -1,8 +1,8 @@
 import pygame
-from Pygame_Settings import Pygame_Settings as Settings
-from LCDCharmap import LCDCharmap
-from LCD import LCD
-from Button import Button
+from pyga.Pygame_Settings import Pygame_Settings as Settings
+from pyga.LCDCharmap import LCDCharmap
+from pyga.LCD import LCD
+from pyga.Button import Button
 import os
 import shutil
 import tkinter as tk

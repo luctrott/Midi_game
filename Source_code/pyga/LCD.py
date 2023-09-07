@@ -1,7 +1,7 @@
 import pygame
-from Pygame_Settings import Pygame_Settings as Settings
-from Char import Char
-from LCDCharmap import LCDCharmap
+from pyga.Pygame_Settings import Pygame_Settings as Settings
+from pyga.Char import Char
+from pyga.LCDCharmap import LCDCharmap
 class LCD:
     
     def __init__(self,screen,charmap:LCDCharmap) -> None:

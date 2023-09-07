@@ -1,5 +1,5 @@
 import pygame
-from Pygame_Settings import Pygame_Settings as Settings
+from pyga.Pygame_Settings import Pygame_Settings as Settings
 class Pixel:
     def __init__(self,screen) -> None:
         self.screen=screen

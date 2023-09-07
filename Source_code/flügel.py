@@ -1,4 +1,3 @@
-#from main import Game
 from LCDHandler import LCDHandler
 from CustomChars import CustomChars
 
