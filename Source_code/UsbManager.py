@@ -4,7 +4,6 @@ import os
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-#Calls a function when the content of a directory changes
 #https://stackoverflow.com/questions/18599339/python-watchdog-monitoring-file-for-changes
 
 class MyHandler(FileSystemEventHandler):
@@ -66,6 +65,6 @@ class UsbManager:
 
 
 if __name__ == "__main__":
-    file_manager=UsbManager()
+    usb_manager=UsbManager()
     input("Press enter to close")
-    file_manager.close()
+    usb_manager.close()
