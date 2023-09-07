@@ -1,6 +1,7 @@
 #from main import Game
 from LCDHandler import LCDHandler
 from CustomChars import CustomChars
+
 class main:
     def __init__(self,game) -> None:
         self._game=game
