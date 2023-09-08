@@ -9,8 +9,6 @@ class FileManager(UsbManager):
         self.__internal_files = self.__load_all_mid(LogicSettings.onboard_dir)
         self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
         self.__current_file = None
-        self._on_dev_added = self.__on_dev_added
-        self._on_dev_removed = self.__on_dev_removed
         self.tasks_on_dev_added=[]
         self.tasks_on_dev_removed=[]
     
@@ -32,7 +30,8 @@ class FileManager(UsbManager):
                     files.append(os.path.join(root, file))
         return files
     
-    def __on_dev_added(self)->None:
+    def _on_dev_added(self)->None:
+        super()._on_dev_added()
         self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
         for task in self.tasks_on_dev_added:
             if callable(task):
@@ -40,7 +39,8 @@ class FileManager(UsbManager):
             else:
                 print("Error: A task on_added is not callable")
     
-    def __on_dev_removed(self)->None:
+    def _on_dev_removed(self)->None:
+        super()._on_dev_removed()
         self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
         for task in self.tasks_on_dev_removed:
             if callable(task):

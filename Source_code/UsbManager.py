@@ -29,8 +29,7 @@ class UsbManager:
         self.__event_handler_dev.to_call_when_added=self._on_dev_added
         self.__event_handler_dev.to_call_when_removed=self._on_dev_removed
         self.__devs=[]
-        self.when_added=None
-        self.when_removed=None
+        self._changed=False
         self.__init()
         self._on_dev_added()
         
@@ -41,29 +40,22 @@ class UsbManager:
     
     def _on_dev_added(self)->None:
         
-        a=False
         for dev in os.listdir(LogicSettings.dev_dir):
             if len(dev)>3 <5:
                 if "sd" in dev:
                     if dev not in self.__devs:
                         self.__mount(dev)
                         self.__devs.append(dev)
-                        a=True
-        if a:
-            if callable(self.when_added):
-                self.when_added()
+                        self._changed=True
 
     def _on_dev_removed(self)->None:
         tmp= os.listdir(LogicSettings.dev_dir)
-        a=False
         for dev in self.__devs:
             if dev not in tmp:
                 self.__unmount(dev)
                 self.__devs.remove(dev)
-                a=True
-        if a:
-            if callable(self.when_removed):
-                self.when_removed()
+                self._changed=True
+        
     
     def __mount(self,dev)->None:
         print("Mounting "+dev)
