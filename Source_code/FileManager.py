@@ -2,12 +2,13 @@ from UsbManager import UsbManager
 from LogicSettings import LogicSettings
 from RuntimeVariables import RuntimeVariables
 import os
+import random
 
 class FileManager(UsbManager):
     def __init__(self):
         super().__init__()
         self.__internal_files = self.__load_all_mid(LogicSettings.onboard_dir)
-        self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
+        self.__files_to_use = []
         self.__current_file = None
         self.tasks_on_dev_added=[]
         self.tasks_on_dev_removed=[]
@@ -17,6 +18,37 @@ class FileManager(UsbManager):
     def mode(self)->int:
         return self._mode
     
+    def __get_files(self)->None:
+        if len(self.__usb_files)>0:
+            self.__files_to_use=self.__usb_files.copy()
+        elif len(self.__internal_files)>0:
+            self.__files_to_use=self.__internal_files.copy()
+        else:
+            RuntimeVariables.error_message="No files found"
+            RuntimeVariables.error=True
+
+    
+    def __shuffle(self,ls:list,start_with_current:bool=False)->list:
+        tmp=ls.copy()
+        a=self.__current_file in tmp
+
+        if start_with_current and a:
+                tmp.remove(self.__current_file)
+                random.shuffle(tmp)
+                tmp.insert(0,self.__current_file)
+        else:
+            random.shuffle(tmp)
+            if a:
+                if self.__current_file == tmp[0]:
+                    t=random.randint(1,len(tmp)-1)
+                    tmp[0],tmp[t]=tmp[t],tmp[0]
+                
+
+      
+
+
+
+
     @mode.setter
     def mode(self,value:int)->None:
         self._mode=value

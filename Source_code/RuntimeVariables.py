@@ -1,2 +1,3 @@
 class RuntimeVariables:
-    mode=0
+    error_message = ""
+    error = False    
