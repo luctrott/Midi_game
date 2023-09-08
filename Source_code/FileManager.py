@@ -11,15 +11,15 @@ class FileManager(UsbManager):
         self.__current_file = None
         self.tasks_on_dev_added=[]
         self.tasks_on_dev_removed=[]
+        self._mode=0
     
     @property
     def mode(self)->int:
-        return RuntimeVariables.mode
+        return self._mode
     
     @mode.setter
     def mode(self,value:int)->None:
-        RuntimeVariables.mode=value
-    
+        self._mode=value
     
     def __load_all_mid(self,path:str)->list:
         files = []
