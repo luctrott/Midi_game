@@ -42,7 +42,10 @@ class FileManager(UsbManager):
                 if self.__current_file == tmp[0]:
                     t=random.randint(1,len(tmp)-1)
                     tmp[0],tmp[t]=tmp[t],tmp[0]
-                
+    def __update(self)->None:
+        self.__get_files()
+        self.__shuffle(self.__files_to_use,start_with_current=True)
+        self.__current_file=self.__files_to_use[0]
 
       
 
