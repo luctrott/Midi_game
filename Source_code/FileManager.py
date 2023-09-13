@@ -6,8 +6,7 @@ import random
 
 class FileManager(UsbManager):
     def __init__(self):
-        super().__init__()
-        self.__internal_files = self.__load_all_mid(LogicSettings.onboard_dir)
+        
         self.__files_to_use = []
         self.__current_file = None
         self.tasks_on_dev_added=[]
@@ -16,6 +15,10 @@ class FileManager(UsbManager):
         self.__tracklist=[]
         self.__index=0
         self.round_completed_task=None
+        self.__internal_files = ["Start"]
+        super().__init__()
+        self.__internal_files = self.__load_all_mid(LogicSettings.onboard_dir)
+        self.__update()
     
     @property
     def mode(self)->int:
