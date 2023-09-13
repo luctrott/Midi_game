@@ -12,19 +12,19 @@ class FileManager(UsbManager):
         self.__current_file = None
         self.tasks_on_dev_added=[]
         self.tasks_on_dev_removed=[]
-        self._mode=0
+        self.__mode=0
         self.__tracklist=[]
         self.__index=0
         self.round_completed_task=None
     
     @property
     def mode(self)->int:
-        return self._mode
+        return self.__mode
     
     @mode.setter
     #["one","all","random","all_loop","random_loop"]
     def mode(self,value:int)->None:
-        self._mode=value
+        self.__mode=value
         self.__update()
 
     def __get_files(self)->None:
@@ -54,7 +54,7 @@ class FileManager(UsbManager):
     
     def __update(self)->None:
         self.__get_files()
-        if self._mode==2 or self._mode==4:
+        if self.__mode==2 or self.__mode==4:
             self.__tracklist=self.__shuffle(self.__files_to_use)
         else:
             self.__tracklist=self.__files_to_use.copy()
@@ -93,11 +93,11 @@ class FileManager(UsbManager):
                 print("Error: A task on_removed is not callable")
     
     def next(self)->None:
-        if self._mode==2 or self._mode==4:
+        if self.__mode==2 or self.__mode==4:
             self.__index+=1
             if self.__index>=len(self.__tracklist):
                 self.__index=0
-                if not self._mode>2:
+                if not self.__mode>2:
                     if callable(self.round_completed_task):
                         self.round_completed_task()
                 self.__tracklist=self.__shuffle(self.__files_to_use,False)
@@ -106,13 +106,13 @@ class FileManager(UsbManager):
             self.__index+=1
             if self.__index>=len(self.__tracklist):
                 self.__index=0
-                if not self._mode>2:
+                if not self.__mode>2:
                     if callable(self.round_completed_task):
                         self.round_completed_task()
                 self.__current_file=self.__tracklist[self.__index]
     
     def previous(self)->None:
-        if self._mode==2 or self._mode==4:
+        if self.__mode==2 or self.__mode==4:
             self.__index-=1
             if self.__index<0:
                 self.__index=len(self.__tracklist)-1
@@ -126,10 +126,9 @@ class FileManager(UsbManager):
     
     def home(self)->None:
         self.__index=0
-        if self._mode==2 or self._mode==4:
+        if self.__mode==2 or self.__mode==4:
             self.__tracklist=self.__shuffle(self.__files_to_use,False)
         self.__current_file=self.__tracklist[self.__index]
     
     def get_current_file(self)->str:
         return self.__current_file
-    
