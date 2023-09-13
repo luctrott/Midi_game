@@ -13,11 +13,20 @@ class FileManager(UsbManager):
         self.tasks_on_dev_added=[]
         self.tasks_on_dev_removed=[]
         self._mode=0
+        self.__tracklist=[]
+        self.__index=0
+        self.round_completed_task=None
     
     @property
     def mode(self)->int:
         return self._mode
     
+    @mode.setter
+    #["one","all","random","all_loop","random_loop"]
+    def mode(self,value:int)->None:
+        self._mode=value
+        self.__update()
+
     def __get_files(self)->None:
         if len(self.__usb_files)>0:
             self.__files_to_use=self.__usb_files.copy()
@@ -26,7 +35,6 @@ class FileManager(UsbManager):
         else:
             RuntimeVariables.error_message="No files found"
             RuntimeVariables.error=True
-
     
     def __shuffle(self,ls:list,start_with_current:bool=False)->list:
         tmp=ls.copy()
@@ -42,20 +50,19 @@ class FileManager(UsbManager):
                 if self.__current_file == tmp[0]:
                     t=random.randint(1,len(tmp)-1)
                     tmp[0],tmp[t]=tmp[t],tmp[0]
+        return tmp
+    
     def __update(self)->None:
         self.__get_files()
+        if self._mode==2 or self._mode==4:
+            self.__tracklist=self.__shuffle(self.__files_to_use)
+        else:
+            self.__tracklist=self.__files_to_use.copy()
+
         self.__shuffle(self.__files_to_use,start_with_current=True)
-        self.__current_file=self.__files_to_use[0]
-
-      
-
-
-
-
-    @mode.setter
-    def mode(self,value:int)->None:
-        self._mode=value
-    
+        self.__current_file=self.__tracklist[0]
+        self.__index=0
+        
     def __load_all_mid(self,path:str)->list:
         files = []
         #Files including subfolders
@@ -68,6 +75,7 @@ class FileManager(UsbManager):
     def _on_dev_added(self)->None:
         super()._on_dev_added()
         self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
+        self.__update()
         for task in self.tasks_on_dev_added:
             if callable(task):
                 task()
@@ -77,9 +85,51 @@ class FileManager(UsbManager):
     def _on_dev_removed(self)->None:
         super()._on_dev_removed()
         self.__usb_files = self.__load_all_mid(LogicSettings.usb_dir)
+        self.__update()
         for task in self.tasks_on_dev_removed:
             if callable(task):
                 task()
             else:
                 print("Error: A task on_removed is not callable")
-
+    
+    def next(self)->None:
+        if self._mode==2 or self._mode==4:
+            self.__index+=1
+            if self.__index>=len(self.__tracklist):
+                self.__index=0
+                if not self._mode>2:
+                    if callable(self.round_completed_task):
+                        self.round_completed_task()
+                self.__tracklist=self.__shuffle(self.__files_to_use,False)
+            self.__current_file=self.__tracklist[self.__index]
+        else:
+            self.__index+=1
+            if self.__index>=len(self.__tracklist):
+                self.__index=0
+                if not self._mode>2:
+                    if callable(self.round_completed_task):
+                        self.round_completed_task()
+                self.__current_file=self.__tracklist[self.__index]
+    
+    def previous(self)->None:
+        if self._mode==2 or self._mode==4:
+            self.__index-=1
+            if self.__index<0:
+                self.__index=len(self.__tracklist)-1
+                self.__tracklist=self.__shuffle(self.__files_to_use,False)
+            self.__current_file=self.__tracklist[self.__index]
+        else:
+            self.__index-=1
+            if self.__index<0:
+                self.__index=len(self.__tracklist)-1
+            self.__current_file=self.__tracklist[self.__index]
+    
+    def home(self)->None:
+        self.__index=0
+        if self._mode==2 or self._mode==4:
+            self.__tracklist=self.__shuffle(self.__files_to_use,False)
+        self.__current_file=self.__tracklist[self.__index]
+    
+    def get_current_file(self)->str:
+        return self.__current_file
+    
