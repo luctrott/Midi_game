@@ -16,14 +16,13 @@ class LCDHandler:
     def __run(self) ->None:
         while not self.__closed:
             self.__work.wait()
-            for t in self.__tasks:
-                
+            
+            while len(self.__tasks)>0:
+                t=self.__tasks.pop(0)
                 if callable(t):
                     t()
                 else:
-                    print("not callable task in lcd_handler")
-
-                self.__tasks.remove(t)
+                    print("Error: A task in lcd is not callable")
             if len(self.__tasks)==0:
                 self.__work.clear()
 
