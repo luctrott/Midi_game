@@ -60,11 +60,13 @@ class Game:
         pygame.display.flip()
         self.running=True
         self.clock=pygame.time.Clock()
-        self.fps=60
+        self.fps=10
       
     def eject(self)->None:
-        shutil.rmtree(LogicSettings.dev_dir)
-        os.mkdir(LogicSettings.dev_dir)
+        for folder in os.listdir(LogicSettings.dev_dir):
+            shutil.rmtree(f"{LogicSettings.dev_dir}{folder}")
+        if not os.path.exists(LogicSettings.dev_dir):
+            os.mkdir(LogicSettings.dev_dir)
         
         
 
