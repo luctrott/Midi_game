@@ -29,6 +29,9 @@ class LCDHandler:
                 self.__work.clear()
                 self.__workdone.set()
 
+    @property
+    def workdone(self)->threading.Event:
+        return self.__workdone
 
     @property
     def backlight_enable(self)->bool:
