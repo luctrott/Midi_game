@@ -17,9 +17,6 @@ class Main:
     
     def run_logic(self)->None:
         #TODO
-        while self.game.running:
-            time.sleep(1)
-        self.main.close()
-
+        self.main.run_logic()
 if __name__ == "__main__":    
     a=Main()
