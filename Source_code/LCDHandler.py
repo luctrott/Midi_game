@@ -7,6 +7,8 @@ class LCDHandler:
         self.__thread=threading.Thread(target=self.__run,daemon=True)
         self.__closed=False
         self.__work=threading.Event()
+        self.__workdone=threading.Event()
+        self.__workdone.clear()
         self.__work.set()
         self.__tasks=[]
         self.__lcd.init()
@@ -25,6 +27,7 @@ class LCDHandler:
                     print("Error: A task in lcd is not callable")
             if len(self.__tasks)==0:
                 self.__work.clear()
+                self.__workdone.set()
 
 
     @property
@@ -33,6 +36,7 @@ class LCDHandler:
     
     @backlight_enable.setter
     def backlight_enable(self,on:bool)->None:
+        self.__workdone.clear()
         self.__tasks.append(functools.partial(self.__backlight_enable,on))
         self.__work.set()
         self.__backlight=on
@@ -41,10 +45,13 @@ class LCDHandler:
         self.__lcd.backlight_enable=on
     
     def clear(self)->None:
+        self.__workdone.clear()
         self.__tasks.append(self.__lcd.clear)
         self.__work.set()
+       
     
     def create_char(self,num:int,bitmap:tuple)->None:
+        self.__workdone.clear()
         self.__tasks.append(functools.partial(self.__lcd.create_char,num,bitmap))
         self.__work.set()
     
@@ -57,10 +64,12 @@ class LCDHandler:
     
     @cursor_pos.setter
     def cursor_pos(self,pos:tuple[int,int])->None:
+        self.__workdone.clear()
         self.__tasks.append(functools.partial(self.__set_cursor_pos,pos[0],pos[1]))
         self.__work.set()
     
     def write_string(self,text:str)->None:
+        self.__workdone.clear()
         self.__tasks.append(functools.partial(self.__lcd.write_string,text))
         self.__work.set()
     
@@ -70,3 +79,4 @@ class LCDHandler:
         self.__work.set()
         self.__thread.join()
         self.__lcd.close()
+        self.__workdone.set()
