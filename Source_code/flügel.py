@@ -139,12 +139,10 @@ class main:
         self.__closed=True
     
     def run_logic(self)->None:
-        c=-1
+        
         self.__whole_time=0
         while self.__closed==False:
             #self.__draw_progress_bar(c)
             time.sleep(1)
-            c+=1
-            self.passed_time=c
-
+            
         self.close()
