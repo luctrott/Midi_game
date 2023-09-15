@@ -1,6 +1,6 @@
 # Midi_game
- My Pygame Porject
-Midi_Player/ LCD sim
+My Pygame Porject
+Midi_Player/ LCD Simulator
 
 Installation
 python3
