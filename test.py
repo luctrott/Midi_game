@@ -1,24 +1,14 @@
 class Parent:
-    def __init__(self):
-        pass
-        self.t=self._call
+    __a=None
 
-    def _call(self):
-        print("Parent")
-    
-    def call(self):
-        self._call()
-    
-class Child(Parent):
-    def __init__(self):
-        super().__init__()
-    
-    def _call(self):
-        super()._call()
-        print("Child")
-    
+    @classmethod
+    def get_a(cls) -> None:
+        return cls.__a
+    @classmethod
+    def set_a(cls,value) -> None:
+        cls.__a=value
+        print("set")
 
-if __name__ == '__main__':
-    c=Child()
-    c.call()
-    print("Done")
+if __name__ == "__main__":
+    Parent.set_a(5)
+    print(Parent.get_a())
