@@ -95,7 +95,7 @@ class FileManager(UsbManager):
             else:
                 print("Error: A task on_removed is not callable")
     
-    def next(self)->None:
+    def next(self)->str:
         if self.__mode==2 or self.__mode==4:
             self.__index+=1
             if self.__index>=len(self.__tracklist):
@@ -113,8 +113,9 @@ class FileManager(UsbManager):
                     if callable(self.round_completed_task):
                         self.round_completed_task()
                 self.__current_file=self.__tracklist[self.__index]
+        return self.__current_file
     
-    def previous(self)->None:
+    def previous(self)->str:
         if self.__mode==2 or self.__mode==4:
             self.__index-=1
             if self.__index<0:
@@ -126,12 +127,14 @@ class FileManager(UsbManager):
             if self.__index<0:
                 self.__index=len(self.__tracklist)-1
             self.__current_file=self.__tracklist[self.__index]
+        return self.__current_file
     
-    def home(self)->None:
+    def home(self)->str:
         self.__index=0
         if self.__mode==2 or self.__mode==4:
             self.__tracklist=self.__shuffle(self.__files_to_use,False)
         self.__current_file=self.__tracklist[self.__index]
+        return self.__current_file
     
     def get_current_file(self)->str:
         return self.__current_file
