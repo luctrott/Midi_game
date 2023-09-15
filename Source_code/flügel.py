@@ -16,6 +16,7 @@ class main:
         self.__lcd.create_char(4,CustomChars.char4)
         self.__lcd.create_char(5,CustomChars.char5)
         self.__lcd.create_char(6,CustomChars.char6)
+        self.__closed=False
         self.__progress_bar_chars=['\x00','\x01','\x02','\x03','\x04']
         self.__progress=0
         self.__progress_bar_curent_chars=[]
@@ -23,7 +24,7 @@ class main:
         self.__current_time_whole="     "
         self.__whole_time=-1
         self.__passed_time=-1
-        self.__closed=False
+        
         for _ in range(10):
             self.__progress_bar_curent_chars.append(self.__progress_bar_chars[0])
         self.__display_time(self.__passed_time,self.__whole_time,False)
@@ -139,7 +140,7 @@ class main:
         self.__closed=True
     
     def run_logic(self)->None:
-        
+
         self.__whole_time=0
         while self.__closed==False:
             #self.__draw_progress_bar(c)
