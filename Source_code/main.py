@@ -1,7 +1,6 @@
 from pyga.Game import Game
 from flügel import main
 from threading import Thread
-import time
 
 class Main:
     def __init__(self) -> None:
