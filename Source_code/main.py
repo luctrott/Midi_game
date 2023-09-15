@@ -16,7 +16,6 @@ class Main:
         self.game.run()
     
     def run_logic(self)->None:
-        #TODO
         self.main.run_logic()
 if __name__ == "__main__":    
     a=Main()
