@@ -20,7 +20,33 @@ class main:
         self.__proggres_bar=ProgressBar(self.__lcd)
         self.__closed=False
         self.__proggres_bar.force_reload()
+        self.__draw_frame(incrementel=False)
+    
+    def __center_text(self,text:str,fill:str=" ",lenth:int=20)->str:
+        if len(text)<lenth:
+            text=fill*int((lenth-len(text))/2)+text+fill*int((lenth-len(text))/2)
+        if len(text)<lenth:
+            text=text+fill
+        return text
         
+    def __draw_frame(self, text:str=None, incrementel:bool=True)->None:
+        self.__lcd.cursor_pos=(0,0)
+        if text is None:
+            self.__lcd.write_string("-"*20)
+        else:
+            self.__lcd.write_string(self.__center_text(text,fill="-"))
+        if not incrementel:
+            self.__lcd.cursor_pos=(0,3)
+            self.__lcd.write_string("-"*20)
+            self.__lcd.cursor_pos=(0,1)
+            self.__lcd.write_string("|")
+            self.__lcd.cursor_pos=(19,1)
+            self.__lcd.write_string("|")
+            self.__lcd.cursor_pos=(0,2)
+            self.__lcd.write_string("|")
+            self.__lcd.cursor_pos=(19,2)
+            self.__lcd.write_string("|")
+
     def close(self) -> None:
         self.__lcd.close()
         self.__filemanager.close()
@@ -28,9 +54,6 @@ class main:
     
     def run_logic(self)->None:
 
-        self.__whole_time=0
         while self.__closed==False:
-            #self.__draw_progress_bar(c)
             time.sleep(1)
-            
-        self.close()
+    

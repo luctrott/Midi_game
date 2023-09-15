@@ -1,4 +1,4 @@
 class RuntimeVariables:
     error_message = ""
     error = False
-    screen = 1
+    screen = 2
