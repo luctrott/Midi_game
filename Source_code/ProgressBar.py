@@ -31,7 +31,8 @@ class ProgressBar:
     @passed_time.setter
     def passed_time(self,value:int)->None:
         self.__passed_time=value
-        self.__display_time(self.__whole_time,self.__passed_time)
+        if RuntimeVariables.screen==1:
+            self.__display_time(self.__whole_time,self.__passed_time)
     
     def __convert_to_dotted(self,seconds:int)->str:
         if seconds<0:

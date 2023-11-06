@@ -3,6 +3,7 @@ from CustomChars import CustomChars
 from FileManager import FileManager
 from ProgressBar import ProgressBar
 from Frames import Frames
+from RuntimeVariables import RuntimeVariables
 
 import time
 
@@ -32,5 +33,12 @@ class main:
     def run_logic(self)->None:
 
         while self.__closed==False:
-            self.__frames.volume(int(input("volume: ")))
+            self.__frames.volume(RuntimeVariables.volume)
+            time.sleep(1)
+            self.__frames.usb_plugged_in()
+            time.sleep(1)
+            self.__frames.usb_removed()
+            time.sleep(1)
+    
+
     
