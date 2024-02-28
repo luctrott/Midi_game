@@ -4,6 +4,4 @@ class RuntimeVariables:
     screen = 2
     volume = 60
     event_callback = None
-
-
-    
+    mode = 1 

@@ -59,6 +59,7 @@ class Frames:
             if RuntimeVariables.screen>10:
                 self._draw_frame(incrementel=True)  
             else:
+                self.__lcd.clear()
                 self._draw_frame(incrementel=False)
             self.__lcd.cursor_pos=(1,1)
             self.__lcd.write_string(self.__center_text("USB plugged in",lenth=18))
@@ -71,6 +72,7 @@ class Frames:
             if RuntimeVariables.screen>10:
                 self._draw_frame(incrementel=True)  
             else:
+                self.__lcd.clear()
                 self._draw_frame(incrementel=False)
             self.__lcd.cursor_pos=(1,1)
             self.__lcd.write_string(self.__center_text("USB removed",lenth=18))
@@ -83,6 +85,7 @@ class Frames:
             if RuntimeVariables.screen>10:
                 self._draw_frame(incrementel=True)  
             else:
+                self.__lcd.clear()
                 self._draw_frame(incrementel=False)
             self.__lcd.cursor_pos=(1,1)
             self.__lcd.write_string(self.__center_text("Too Many ",lenth=18))
@@ -96,6 +99,7 @@ class Frames:
             if RuntimeVariables.screen>10:
                 self._draw_frame(incrementel=True)  
             else:
+                self.__lcd.clear()
                 self._draw_frame(incrementel=False)
             self.__lcd.cursor_pos=(1,1)
             self.__lcd.write_string(self.__center_text("No Output",lenth=18))
